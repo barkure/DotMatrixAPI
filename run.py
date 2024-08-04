@@ -1,12 +1,12 @@
 from fastapi import FastAPI, Query
 import uvicorn
-from fonts.SimSun.SimSun24x24 import font as SimSun24x24
+from fonts.SimSun.SimSun32x32 import font as SimSun32x32
 
 
 app = FastAPI()
 
 fonts = {
-    "SimSun24x24": SimSun24x24
+    "SimSun32x32": SimSun32x32,
 }
 
 
@@ -51,7 +51,7 @@ def get_bytes_array(font: str = Query, text: str = Query(...), color: int = Quer
     # 获得字符数目
     char_num = len(text)
     # 获得所有字符的数据
-    char_data_list = [font[char] for char in text]
+    char_data_list = [font[char] if char in font else font['？'] for char in text]
     # 最终的数据
     bytes_list = []
     # 得到每行的比特数据
